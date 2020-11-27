@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost",]
 
-
 # Application definition
 
 DJANGO_APPS = [
