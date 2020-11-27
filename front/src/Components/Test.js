@@ -12,6 +12,7 @@ class Test extends React.Component {
             data: null
         };
     }
+
     componentDidMount() {
         axios.get("http://localhost:8000/api/test/")
         .then((res) => {
@@ -20,6 +21,7 @@ class Test extends React.Component {
             });
         });
     }
+
     handlePost() {
         axios.post("http://localhost:8000/api/test/", {
             name: 'posted!'
@@ -32,6 +34,7 @@ class Test extends React.Component {
         });
 
     }
+
     render() {
         return (
             <>
