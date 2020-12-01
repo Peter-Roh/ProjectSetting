@@ -23,10 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["localhost", "projectsetting-dev.eba-maiafzm2.ap-northeast-2.elasticbeanstalk.com",]
+ALLOWED_HOSTS = ["localhost", ".elasticbeanstalk.com",]
 
 # Application definition
 
@@ -69,7 +66,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            '../front/build/', # react build한 파일
+            os.path.join(BASE_DIR, "build"), # react build한 파일
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -86,15 +83,39 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# Database and DEBUG
+# SECURITY WARNING: don't run with debug turned on in production!
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+STATE = os.environ.get("STATE")
+
+if STATE == "local":
+    DEBUG = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+elif STATE == "dev":
+    DEBUG = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ.get("RDS_HOST"), # endpoint
+            'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
+            'USER': os.environ.get("RDS_USER"),
+            'PASSWORD': os.environ.get("RDS_PASSOWRD"),
+            'PORT': '5432',
+        }
+    }
+
+elif STATE == "production":
+    DEBUG = False
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -135,7 +156,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "../front/build/static/"),
+    os.path.join(BASE_DIR, "build/static/"),
 ]
 
 # rest_framework permission settings
