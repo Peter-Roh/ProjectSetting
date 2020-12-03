@@ -99,16 +99,23 @@ if STATE == "local":
     }
 
 elif STATE == "dev":
-    DEBUG = True
+    DEBUG = False
+
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql',
+    #         'HOST': os.environ.get("RDS_HOST"), # endpoint
+    #         'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
+    #         'USER': os.environ.get("RDS_USER"),
+    #         'PASSWORD': os.environ.get("RDS_PASSOWRD"),
+    #         'PORT': '5432',
+    #     }
+    # }
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': os.environ.get("RDS_HOST"), # endpoint
-            'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
-            'USER': os.environ.get("RDS_USER"),
-            'PASSWORD': os.environ.get("RDS_PASSOWRD"),
-            'PORT': '5432',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
 
@@ -148,7 +155,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
