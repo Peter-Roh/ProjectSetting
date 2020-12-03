@@ -45,6 +45,7 @@ PROJECT_APPS = [
 THIRD_PARTY_APPS = [
     'corsheaders',
     'rest_framework',
+    'storages',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -81,41 +82,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-
-# Database and DEBUG
-# SECURITY WARNING: don't run with debug turned on in production!
-
-STATE = os.environ.get("STATE")
-
-if STATE == "local":
-    DEBUG = True
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-
-elif STATE == "dev":
-    DEBUG = True
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': os.environ.get("RDS_HOST"), # endpoint
-            'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
-            'USER': os.environ.get("RDS_USER"),
-            'PASSWORD': os.environ.get("RDS_PASSOWRD"),
-            'PORT': '5432',
-        }
-    }
-
-# elif STATE == "production":
-#     DEBUG = False
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -185,3 +151,46 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+# Database and DEBUG
+# SECURITY WARNING: don't run with debug turned on in production!
+
+STATE = os.environ.get("STATE")
+
+if STATE == "local":
+    DEBUG = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+elif STATE == "dev":
+    DEBUG = True
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ.get("RDS_HOST"), # endpoint
+            'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
+            'USER': os.environ.get("RDS_USER"),
+            'PASSWORD': os.environ.get("RDS_PASSOWRD"),
+            'PORT': '5432',
+        }
+    }
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = 'Project-Setting-dev-S3' # change name
+    AWS_AUTO_CREATE_BUCKET = True
+    AWS_BUCKET_ACL = 'public-read'
+
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static"
+
+# elif STATE == "production":
+#     DEBUG = False
+
