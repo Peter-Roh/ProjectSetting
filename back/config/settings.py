@@ -99,7 +99,7 @@ if STATE == "local":
     }
 
 elif STATE == "dev":
-    DEBUG = False
+    DEBUG = True
 
     DATABASES = {
         'default': {
