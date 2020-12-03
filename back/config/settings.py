@@ -101,21 +101,14 @@ if STATE == "local":
 elif STATE == "dev":
     DEBUG = False
 
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.postgresql',
-    #         'HOST': os.environ.get("RDS_HOST"), # endpoint
-    #         'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
-    #         'USER': os.environ.get("RDS_USER"),
-    #         'PASSWORD': os.environ.get("RDS_PASSOWRD"),
-    #         'PORT': '5432',
-    #     }
-    # }
-
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.environ.get("RDS_HOST"), # endpoint
+            'NAME': os.environ.get("RDS_NAME"), # amazon RDS DB identifier
+            'USER': os.environ.get("RDS_USER"),
+            'PASSWORD': os.environ.get("RDS_PASSOWRD"),
+            'PORT': '5432',
         }
     }
 
