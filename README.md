@@ -8,10 +8,4 @@ Front: React
 
 Back: Django
 
-Web server: 
-
-Hosting: 
-
-CI/CD: 
-
-VCS: Git
+Deployment: Amazon Aws Elastic Beanstalk
