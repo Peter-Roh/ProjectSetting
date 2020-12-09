@@ -63,11 +63,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+# AUTH_USER_MODEL = "users.User"
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, "templates"), # react build한 파일
+            os.path.join(BASE_DIR, "build"), # react build한 파일
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -123,7 +125,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "templates/static/"),
+    os.path.join(BASE_DIR, "build/static/"),
 ]
 
 # rest_framework permission settings
