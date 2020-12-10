@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build && mv build ../back",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build && rm -rf ../django-backend/build && mv build ../back",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
