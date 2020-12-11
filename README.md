@@ -8,4 +8,4 @@ Front: React
 
 Back: Django
 
-Deployment: Amazon Aws Elastic Beanstalk
+Deployment: Amazon AWS Elastic Beanstalk
